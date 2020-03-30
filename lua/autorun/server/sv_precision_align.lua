@@ -1,4 +1,4 @@
-// Precision Alignment serverside code - By Wenli
+-- Precision Alignment serverside code - By Wenli
 if CLIENT then return end
 
 local PA = "precision_align"
@@ -8,12 +8,12 @@ util.AddNetworkString( PA_ .. "constraint" )
 util.AddNetworkString( PA_ .. "click" )
 util.AddNetworkString( PA_ .. "ent" )
 	
-// Used to record each player's last PA action
+-- Used to record each player's last PA action
 local action_table = {}
 
 CreateConVar( PA_ .. "stack_delay", 0.01 )
 
-// Undo
+-- Undo
 local function UndoMove( Undo, ent, pos, ang )
 	if IsValid(ent) then
 		ent:SetPos( pos )
@@ -21,7 +21,7 @@ local function UndoMove( Undo, ent, pos, ang )
 	end
 end
 
-// Sounds
+-- Sounds
 local function playsound( ply, bool )
 	if bool then
 		ply:EmitSound("buttons/button14.wav", 100, 100)
@@ -29,12 +29,12 @@ local function playsound( ply, bool )
 end
 		
 
-//********************************************************************************************************************//
-// Mirror lists
-//********************************************************************************************************************//
+-- ********************************************************************************************************************--
+-- Mirror lists
+--********************************************************************************************************************--
 
-// Exceptions lists - all lower case!
-// General
+-- Exceptions lists - all lower case!
+-- General
 list.Set( "PA_mirror_exceptions_specific", "models/props_phx/construct/metal_plate1x2_tri.mdl", Angle(180,0,180) )
 list.Set( "PA_mirror_exceptions_specific", "models/props_phx/construct/metal_plate1_tri.mdl", Angle(180,0,180) )
 list.Set( "PA_mirror_exceptions_specific", "models/props_phx/construct/metal_plate2x2_tri.mdl", Angle(180,0,180) )
@@ -42,7 +42,7 @@ list.Set( "PA_mirror_exceptions_specific", "models/props_phx/construct/metal_pla
 list.Set( "PA_mirror_exceptions_specific", "models/props_phx/construct/metal_plate4x4_tri.mdl", Angle(180,0,180) )
 list.Set( "PA_mirror_exceptions_specific", "models/props_phx/construct/plastic/plastic_angle_90.mdl", Angle(180,0,180) )
 
-// Misc
+-- Misc
 list.Set( "PA_mirror_exceptions_specific", "models/hunter/misc/stair1x1inside.mdl", Angle(180,90,0) )
 list.Set( "PA_mirror_exceptions_specific", "models/hunter/misc/stair1x1outside.mdl", Angle(180,90,0) )
 list.Set( "PA_mirror_exceptions_specific", "models/props_phx/gibs/wooden_wheel1_gib2.mdl", Angle(0,180,0) )
@@ -50,8 +50,8 @@ list.Set( "PA_mirror_exceptions_specific", "models/props_phx/gibs/wooden_wheel1_
 list.Set( "PA_mirror_exceptions_specific", "models/props_phx/gibs/wooden_wheel2_gib1.mdl", Angle(0,180,0) )
 list.Set( "PA_mirror_exceptions_specific", "models/props_phx/gibs/wooden_wheel2_gib2.mdl", Angle(0,180,0) )
 
-// Robotics
-// Most of these are (180,0,0) since it's easier to set the whole of robotics as (0,180,0) in exceptions 2
+-- Robotics
+-- Most of these are (180,0,0) since it's easier to set the whole of robotics as (0,180,0) in exceptions 2
 list.Set( "PA_mirror_exceptions_specific", "models/mechanics/robotics/foot.mdl", Angle(180,0,0) )
 list.Set( "PA_mirror_exceptions_specific", "models/mechanics/robotics/j1.mdl", Angle(180,0,0) )
 list.Set( "PA_mirror_exceptions_specific", "models/mechanics/robotics/j2.mdl", Angle(180,0,0) )
@@ -71,13 +71,13 @@ list.Set( "PA_mirror_exceptions_specific", "models/mechanics/robotics/claw2.mdl"
 list.Set( "PA_mirror_exceptions_specific", "models/mechanics/roboticslarge/claw_hub_8.mdl", Angle(180,0,0) )
 list.Set( "PA_mirror_exceptions_specific", "models/mechanics/roboticslarge/claw_hub_8l.mdl", Angle(180,0,0) )
 
-// Solid Steel
+-- Solid Steel
 list.Set( "PA_mirror_exceptions_specific", "models/mechanics/solid_steel/sheetmetal_90_4.mdl", Angle(0,-90,180) )
 list.Set( "PA_mirror_exceptions_specific", "models/mechanics/solid_steel/sheetmetal_box90_4.mdl", Angle(0,0,180) )
 list.Set( "PA_mirror_exceptions_specific", "models/mechanics/solid_steel/sheetmetal_h90_4.mdl", Angle(180,0,90) )
 list.Set( "PA_mirror_exceptions_specific", "models/mechanics/solid_steel/sheetmetal_t_4.mdl", Angle(0,0,180) )
 
-// Specialized
+-- Specialized
 list.Set( "PA_mirror_exceptions_specific", "models/props_phx/construct/metal_angle90.mdl", Angle(180,90,0) )
 list.Set( "PA_mirror_exceptions_specific", "models/props_phx/construct/metal_dome90.mdl", Angle(180,90,0) )
 list.Set( "PA_mirror_exceptions_specific", "models/props_phx/construct/metal_plate_curve.mdl", Angle(180,90,0) )
@@ -223,19 +223,19 @@ list.Set( "PA_mirror_exceptions_specific", "models/xqm/deg45single.mdl", Angle(0
 list.Set( "PA_mirror_exceptions_specific", "models/xqm/deg90.mdl", Angle(0,180,-90) )
 list.Set( "PA_mirror_exceptions_specific", "models/xqm/deg90single.mdl", Angle(0,180,-90) )
 
-// Transportation
+-- Transportation
 list.Set( "PA_mirror_exceptions_specific", "models/props_phx/misc/propeller3x_small.mdl", Angle(0,120,180) )
 list.Set( "PA_mirror_exceptions_specific", "models/props_phx/huge/road_curve.mdl", Angle(0,180,0) )
 list.Set( "PA_mirror_exceptions_specific", "models/props_phx/trains/tracks/track_turn45.mdl", Angle(180,135,0) )
 list.Set( "PA_mirror_exceptions_specific", "models/props_phx/trains/tracks/track_turn90.mdl", Angle(180,90,0) )
 
-// Geometric
+-- Geometric
 list.Set( "PA_mirror_exceptions_specific", "models/hunter/geometric/hex025x1.mdl", Angle(0,0,180) )
 list.Set( "PA_mirror_exceptions_specific", "models/hunter/geometric/hex1x05.mdl", Angle(0,0,180) )
 list.Set( "PA_mirror_exceptions_specific", "models/hunter/geometric/para1x1.mdl", Angle(0,180,0) )
 list.Set( "PA_mirror_exceptions_specific", "models/hunter/geometric/pent1x1.mdl", Angle(0,0,180) )
 
-// Vehicles
+-- Vehicles
 list.Set( "PA_mirror_exceptions_specific", "models/nova/airboat_seat.mdl", Angle(0,0,180) )
 list.Set( "PA_mirror_exceptions_specific", "models/nova/chair_office01.mdl", Angle(0,0,180) )
 list.Set( "PA_mirror_exceptions_specific", "models/nova/chair_office02.mdl", Angle(0,0,180) )
@@ -259,9 +259,9 @@ list.Set( "PA_mirror_exceptions", "models/xqm/wing", Angle(0,0,180) )
 list.Set( "PA_mirror_exceptions", "models/xeon133/racewheel/", Angle(0,0,180) )
 list.Set( "PA_mirror_exceptions", "models/xeon133/racewheelskinny/", Angle(0,0,180) )
 
-//********************************************************************************************************************//
-// Duplicate ents
-//********************************************************************************************************************//
+--********************************************************************************************************************--
+-- Duplicate ents
+--********************************************************************************************************************--
 
 
 local last_ent -- Used for nocollide
@@ -269,14 +269,14 @@ local stack_queue = {}
 local undo_table = {}
 local processing = false
 
-// stack_ID is used to keep track within this file, stackID is used locally within functions
+-- stack_ID is used to keep track within this file, stackID is used locally within functions
 local stack_ID = 0
 
-// Duplicate an entity in the stack queue
+-- Duplicate an entity in the stack queue
 local function Queue_Process()
 	local ent_table = table.remove( stack_queue, 1 )
 	
-	// Stop processing the stack queue
+	-- Stop processing the stack queue
 	if !ent_table then
 		last_ent = nil
 		processing = false
@@ -286,26 +286,26 @@ local function Queue_Process()
 	local ply = ent_table.ply
 	if !IsValid( ply ) then return false end
 	
-	// Stack entity
+	-- Stack entity
 	local ent = duplicator.CreateEntityFromTable( ply, ent_table.data )
 	if !IsValid( ent ) then return false end
 	
 	local stackID = ent_table.stackID
 	
-	// Apply dupe info
+	-- Apply dupe info
 	ent.EntityMods = table.Copy( ent_table.data.EntityMods )
 	duplicator.ApplyEntityModifiers( ply, ent )
 	duplicator.DoGenericPhysics( ent, ply, ent_table.data )
 	ent:SetCollisionGroup( ent_table.collision_group )
 	
-	// Apply nocollide
+	-- Apply nocollide
 	if ent_table.nocollide then
-		// Nocollide each stacked ent with previous
+		-- Nocollide each stacked ent with previous
 		if IsValid( last_ent ) then
 			constraint.NoCollide( ent, last_ent )
 		end
 		
-		// Nocollide selected ent with final stacked ent
+		-- Nocollide selected ent with final stacked ent
 		if !stack_queue[1] or stackID ~= stack_queue[1].stackID then
 			constraint.NoCollide( ent, ent_table.data.Entity )
 			last_ent = nil
@@ -326,7 +326,7 @@ end
 
 cleanup.Register( "stacks" )
 
-// Create the undo function at the end of each stack_ID queue
+-- Create the undo function at the end of each stack_ID queue
 local function Stack_Undo( undo_table ) -- if table.Count( undo_table ) == 0 then return end
 	local ply = undo_table[1].ply
 	
@@ -347,29 +347,34 @@ local function Stack_Undo( undo_table ) -- if table.Count( undo_table ) == 0 the
 	table.Empty( undo_table )
 end
 
-// Handle stack queueing (called by timer)
+-- Handle stack queueing (called by timer)
 local stackID_old
 
 local function Stack_Loop()
 	if #stack_queue > 0 and processing then
-		local r, e = pcall( Queue_Process )
+
+	    -- `result` can be an error table or the return value of Queue_Process
+	    -- Expect Queue_Process to return a table of info, or `false`
+		local success, result = pcall( Queue_Process )
+
+		local wasSuccessful = success and result ~= false
+
+		if not wasSuccessful then return ErrorNoHalt( result, "\n" )
 		
-		if !r then
-			ErrorNoHalt( e, "\n" )
-		else
-			// Create undo if stack_IDs are different
-			if !stackID_old then
-				stackID_old = e.stackID
-			elseif stackID_old ~= e.stackID then
-				Stack_Undo( undo_table )
-				stackID_old = e.stackID
-			end
-			table.insert( undo_table, e )
-			return true
-		end
+        -- Create undo if stack_IDs are different
+        if not stackID_old then
+            stackID_old = result.stackID
+        elseif stackID_old ~= result.stackID then
+            Stack_Undo( undo_table )
+            stackID_old = result.stackID
+        end
+
+        table.insert( undo_table, e )
+
+        return true
 	end
 	
-	// Cleanup after stacking
+	-- Cleanup after stacking
 	timer.Destroy( "PA_StackTimer" )
 	last_ent = nil
 	processing = false
@@ -390,7 +395,7 @@ local function Queue_Add( ply, ent, stackID )
 	
 	table.insert( stack_queue, ent_table )
 	
-	// Start processing the stack queue
+	-- Start processing the stack queue
 	if !processing then
 		processing = true
 		local Delay = GetConVarNumber( PA_ .. "stack_delay", 0.1 )
@@ -400,15 +405,15 @@ local function Queue_Add( ply, ent, stackID )
 end
 
 
-//********************************************************************************************************************//
-// Move ents
-//********************************************************************************************************************//
+--********************************************************************************************************************--
+-- Move ents
+--********************************************************************************************************************--
 
 
-// Args list:
-// 1,2,3 = Movement vector
-// 4 = Stack number
-// 5 = Repeat flag
+-- Args list:
+-- 1,2,3 = Movement vector
+-- 4 = Stack number
+-- 5 = Repeat flag
 function precision_align_move_func( ply, cmd, args )
 	if !ply.PA_activeent then return false end
 	local ent = ply.PA_activeent
@@ -423,18 +428,18 @@ function precision_align_move_func( ply, cmd, args )
 	local startpos = ent:GetPos()
 	local startang = ent:GetAngles()
 	
-	// Begin stacking
+	-- Begin stacking
 	if stack > 0 then
 		stack_ID = stack_ID + 1
 	end
 	
 	for stacks = 1, math.max(stack, 1) do
-		// Add to stack queue
+		-- Add to stack queue
 		if stack > 0 then
 			Queue_Add( ply, ent, stack_ID )
 		end
 		
-		// Move entity
+		-- Move entity
 		local pos = ent:GetPos()
 		local ang = ent:GetAngles()
 		
@@ -448,7 +453,7 @@ function precision_align_move_func( ply, cmd, args )
 		undo.AddFunction( UndoMove, ent, startpos, startang )
 	undo.Finish()
 	
-	// Record action
+	-- Record action
 	if !args[5] then
 		action_table[ply] = args
 		action_table[ply][5] = true
@@ -461,12 +466,12 @@ end
 concommand.Add( PA_.. "move", precision_align_move_func )
 
 
-//********************************************************************************************************************//
-// Rotate ents
-//********************************************************************************************************************//
+--********************************************************************************************************************--
+-- Rotate ents
+--********************************************************************************************************************--
 
 
-// Rotate by world axes
+-- Rotate by world axes
 local function rotate_world( ang, rotang )
 	if rotang.p != 0 then
 		ang:RotateAroundAxis( Vector(0,1,0), rotang.p )
@@ -481,7 +486,7 @@ local function rotate_world( ang, rotang )
 	return ang
 end
 
-// Convert from euler to axis-angle by quaternion method
+-- Convert from euler to axis-angle by quaternion method
 local function euler_to_axisangle( ang )
 	if !ang then return false end
 
@@ -513,13 +518,13 @@ local function euler_to_axisangle( ang )
 	return axis, angle
 end
 
-// Three methods of rotation - absolute(0), relative(1), world(2) and axis/angle(3)
-// Args list:
-// 1,2,3 = Rotation Angle
-// 4,5,6 = Pivot Vector
-// 7 = Rotation type
-// 8 = Stack number
-// 9 = Repeat flag
+-- Three methods of rotation - absolute(0), relative(1), world(2) and axis/angle(3)
+-- Args list:
+-- 1,2,3 = Rotation Angle
+-- 4,5,6 = Pivot Vector
+-- 7 = Rotation type
+-- 8 = Stack number
+-- 9 = Repeat flag
 function precision_align_rotate_func( ply, cmd, args )
 	if !ply.PA_activeent then return false end
 	local ent = ply.PA_activeent
@@ -533,7 +538,7 @@ function precision_align_rotate_func( ply, cmd, args )
 	local startpos = ent:GetPos()
 	local startang = ent:GetAngles()
 	
-	// Change angle method depending on the "relative" variable
+	-- Change angle method depending on the "relative" variable
 	local a
 	local relative = tonumber(args[7]) or 0
 	local test
@@ -557,7 +562,7 @@ function precision_align_rotate_func( ply, cmd, args )
 		if a == startang then return false end
 	end
 	
-	// Get pivot point
+	-- Get pivot point
 	local v
 	if !tonumber(args[4]) or !tonumber(args[5]) or !tonumber(args[6]) then
 		v = startpos
@@ -568,25 +573,25 @@ function precision_align_rotate_func( ply, cmd, args )
 	local stack = tonumber(args[8]) or 0
 	stack = math.Round(math.Clamp( stack, 0, 20 ))
 	
-	// Figure out parameters for relative angle stacking
+	-- Figure out parameters for relative angle stacking
 	if stack >= 2 then
 		a = ent:WorldToLocalAngles( a )
 	end
 	
-	// Begin stacking
+	-- Begin stacking
 	for stacks = 1, math.max(stack, 1) do
-		// Add to stack queue
+		-- Add to stack queue
 		if stack > 0 then
 			Queue_Add( ply, ent )
 		end
 		
-		// Rotate entity
+		-- Rotate entity
 		local pos = ent:GetPos()
 		local ang = ent:GetAngles()
 		
 		local localv
 		
-		// Stack by absolute angle
+		-- Stack by absolute angle
 		if stack < 2 then
 			if v == pos then
 				ent:SetAngles(a)
@@ -597,7 +602,7 @@ function precision_align_rotate_func( ply, cmd, args )
 				ent:SetPos(pos)
 			end
 			
-		// Stack by relative angle
+		-- Stack by relative angle
 		else
 			if v == pos then
 				ent:SetAngles( ent:LocalToWorldAngles( a ) )
@@ -617,7 +622,7 @@ function precision_align_rotate_func( ply, cmd, args )
 		undo.AddFunction( UndoMove, ent, startpos, startang )
 	undo.Finish()
 	
-	// Record action
+	-- Record action
 	if !args[9] then
 		action_table[ply] = args
 		action_table[ply][9] = true
@@ -630,19 +635,19 @@ end
 concommand.Add( PA_.. "rotate", precision_align_rotate_func )
 
 
-//********************************************************************************************************************//
-// Mirror ents
-//********************************************************************************************************************//
+--********************************************************************************************************************--
+-- Mirror ents
+--********************************************************************************************************************--
 
 
-// This was converted to a server-side command since it involves both rotation + translation in one step, and massCenter isn't available on client
-// The mirror exception table can be changed on the server if needed for debugging/updating
+-- This was converted to a server-side command since it involves both rotation + translation in one step, and massCenter isn't available on client
+-- The mirror exception table can be changed on the server if needed for debugging/updating
 
-// Args list:
-// 1,2,3 = Plane Origin Vector
-// 4,5,6 = Plane Normal Vector
-// 7 = Stack number
-// 8 = Repeat flag
+-- Args list:
+-- 1,2,3 = Plane Origin Vector
+-- 4,5,6 = Plane Normal Vector
+-- 7 = Stack number
+-- 8 = Repeat flag
 function precision_align_mirror_func( ply, cmd, args )
 	if !ply.PA_activeent then return false end
 	local ent = ply.PA_activeent
@@ -656,10 +661,10 @@ function precision_align_mirror_func( ply, cmd, args )
 	
 	local pos = ent:GetPos()
 	local ang = ent:GetAngles()
-	// Mass centre seems to be most reliable way of finding a point on the plane of symmetry
+	-- Mass centre seems to be most reliable way of finding a point on the plane of symmetry
 	local v = ent:LocalToWorld(ent:GetPhysicsObject():GetMassCenter())
 	
-	// Stack before mirroring
+	-- Stack before mirroring
 	local ent2
 	if stack > 0 then
 		Queue_Add( ply, ent )
@@ -671,16 +676,16 @@ function precision_align_mirror_func( ply, cmd, args )
 		undo.AddFunction( UndoMove, ent, pos, ang )
 	undo.Finish()
 	
-	// Mirror angle
-	// Filter through exceptions for ents that need to be rotated differently
+	-- Mirror angle
+	-- Filter through exceptions for ents that need to be rotated differently
 	local exceptionang
 	local model = string.lower( ent:GetModel() )
 	local PA_mirror_exceptions_specific = list.Get( "PA_mirror_exceptions_specific" )
 	
-	// Match entire string
+	-- Match entire string
 	exceptionang = PA_mirror_exceptions_specific[model]
 	
-	// Match left part of string
+	-- Match left part of string
 	if !exceptionang then
 		local PA_mirror_exceptions = list.Get( "PA_mirror_exceptions" )
 		for k, v in pairs( PA_mirror_exceptions ) do
@@ -699,7 +704,7 @@ function precision_align_mirror_func( ply, cmd, args )
 	
 	ang:RotateAroundAxis( normal, 180 )
 	
-	// Rotate around v, same method as rotation function
+	-- Rotate around v, same method as rotation function
 	local localv
 	if v == pos then
 		ent:SetAngles(ang)
@@ -709,13 +714,13 @@ function precision_align_mirror_func( ply, cmd, args )
 		pos = pos + ( v - ent:LocalToWorld(localv) )
 	end
 	
-	// Mirror position
+	-- Mirror position
 	local length = normal:Dot(origin - v)
 	local vec = normal * length * 2
 	ent:SetPos(pos + vec)
 	ent:GetPhysicsObject():EnableMotion( false )
 	
-	// Record action
+	-- Record action
 	if !args[8] then
 		action_table[ply] = args
 		action_table[ply][8] = true
@@ -728,9 +733,9 @@ end
 concommand.Add( PA_.. "mirror", precision_align_mirror_func )
 
 
-//********************************************************************************************************************//
-// Constrain ents
-//********************************************************************************************************************//
+--********************************************************************************************************************--
+-- Constrain ents
+--********************************************************************************************************************--
 
 function precision_align_constraint_func( len, ply )
 	local data = net.ReadTable()
@@ -740,7 +745,7 @@ function precision_align_constraint_func( len, ply )
 	local Ent1 = Entity( data.Ent1 )
 	local Ent2 = Entity( data.Ent2 )
 	
-	// Entity(0) returns Null rather than World on server
+	-- Entity(0) returns Null rather than World on server
 	if Ent1 == NULL then Ent1 = game.GetWorld() end
 	if Ent2 == NULL then Ent2 = game.GetWorld() end
 	
@@ -849,7 +854,7 @@ function precision_align_constraint_func( len, ply )
 		local width = ply:GetInfoNum( PA_.. "wire_hydraulic_width", 1 )
 		local material = ply:GetInfo( PA_.. "wire_hydraulic_material", "cable/rope" )
 		
-		// Create new constraint before removing the old one
+		-- Create new constraint before removing the old one
 		local oldconstraint = controller.constraint
 		local oldrope = controller.rope
 		
@@ -868,7 +873,7 @@ function precision_align_constraint_func( len, ply )
 			controller:DeleteOnRemove( rope )
 		end
 		
-		// Remove the existing hydraulic constraint
+		-- Remove the existing hydraulic constraint
 		if oldconstraint then
 			controller:DontDeleteOnRemove( oldconstraint )
 			oldconstraint:DontDeleteOnRemove( controller )
@@ -905,12 +910,12 @@ end
 net.Receive( PA_.. "constraint", precision_align_constraint_func )
 
 
-//********************************************************************************************************************//
-// Perform last action
-//********************************************************************************************************************//
+--********************************************************************************************************************--
+-- Perform last action
+--********************************************************************************************************************--
 
 
-// Keep a record of each player's last PA action
+-- Keep a record of each player's last PA action
 function precision_align_lastaction_func( ply, cmd, args )
 	if !ply.PA_activeent then return false end
 	local ent = ply.PA_activeent
