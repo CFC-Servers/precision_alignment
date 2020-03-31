@@ -359,7 +359,7 @@ local function Stack_Loop()
 
 		local wasSuccessful = success and result ~= false
 
-		if not wasSuccessful then return ErrorNoHalt( result, "\n" )
+		if not wasSuccessful then return ErrorNoHalt( result, "\n" ) end
 		
         -- Create undo if stack_IDs are different
         if not stackID_old then
