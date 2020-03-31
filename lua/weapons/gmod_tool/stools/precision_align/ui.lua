@@ -54,10 +54,10 @@ end
 --********************************************************************************************************************--
 
 
-/*---------------------------------------------------------
-   Name: Stack_Num_Request
-   Popup window to request stack_num
----------------------------------------------------------*/
+-----------------------------------------------------------
+--   Name: Stack_Num_Request
+--   Popup window to request stack_num
+-----------------------------------------------------------
 
 local STACK_POPUP = {}
 
@@ -144,10 +144,10 @@ end
 vgui.Register("PA_Stack_Popup", STACK_POPUP, "DFrame")
 
 
-/*---------------------------------------------------------
-   Name: PA_Construct_ListView
-   Standard construct list
----------------------------------------------------------*/
+-----------------------------------------------------------
+--   Name: PA_Construct_ListView
+--   Standard construct list
+-----------------------------------------------------------
 
 local CONSTRUCT_LISTVIEW = {}
 function CONSTRUCT_LISTVIEW:Init()
@@ -208,10 +208,10 @@ end
 
 vgui.Register("PA_Indicator", INDICATOR, "DPanel")
 
-/*---------------------------------------------------------
-   Name: PA_XYZ_Sliders
-   XYZ slider control for vector input/output
----------------------------------------------------------*/
+-----------------------------------------------------------
+--   Name: PA_XYZ_Sliders
+--   XYZ slider control for vector input/output
+-----------------------------------------------------------
 
 local XYZ_SLIDER = {}
 function XYZ_SLIDER:Init()
@@ -315,10 +315,10 @@ vgui.Register("PA_XYZ_Sliders", XYZ_SLIDERS, "DPanel")
 
 
 
-/*---------------------------------------------------------
-   Name: PA_Function_Button
-   Standard button that can be assigned a function
----------------------------------------------------------*/
+-----------------------------------------------------------
+--   Name: PA_Function_Button
+--   Standard button that can be assigned a function
+-----------------------------------------------------------
 
 local FUNCTION_BUTTON = {}
 function FUNCTION_BUTTON:Init()
@@ -337,10 +337,10 @@ function FUNCTION_BUTTON:SetFunction( func )
 end
 vgui.Register("PA_Function_Button", FUNCTION_BUTTON, "DButton")
 
-/*---------------------------------------------------------
-   Name: PA_Function_Button_2
-   Construct functions selection button
----------------------------------------------------------*/
+-----------------------------------------------------------
+--   Name: PA_Function_Button_2
+--   Construct functions selection button
+-----------------------------------------------------------
 
 local function_buttons_2_list = {}
 local FUNCTION_BUTTON_2 = {}
@@ -424,10 +424,10 @@ end
 
 vgui.Register("PA_Function_Button_2", FUNCTION_BUTTON_2, "DButton")
 
-/*---------------------------------------------------------
-   Name: PA_Function_Button_3
-   Move Constructs selection button
----------------------------------------------------------*/
+-----------------------------------------------------------
+--   Name: PA_Function_Button_3
+--   Move Constructs selection button
+-----------------------------------------------------------
 
 local function_buttons_3_list = {}
 local FUNCTION_BUTTON_3 = {}
@@ -486,10 +486,10 @@ end
 
 vgui.Register("PA_Function_Button_3", FUNCTION_BUTTON_3, "DButton")
 
-/*---------------------------------------------------------
-   Name: PA_Function_Button_Rotation
-   Rotation Functions selection button
----------------------------------------------------------*/
+-----------------------------------------------------------
+--   Name: PA_Function_Button_Rotation
+--   Rotation Functions selection button
+-----------------------------------------------------------
 
 local rotation_function_buttons_list = {}
 local FUNCTION_BUTTON_ROTATION = {}
@@ -571,9 +571,9 @@ end
 
 vgui.Register("PA_Function_Button_Rotation", FUNCTION_BUTTON_ROTATION, "DButton")
 
-/*---------------------------------------------------------
-   Name: Standard manipulation window buttons
----------------------------------------------------------*/
+-----------------------------------------------------------
+--   Name: Standard manipulation window buttons
+-----------------------------------------------------------
 
 local ZERO_BUTTON = {}
 function ZERO_BUTTON:Init()
@@ -723,10 +723,10 @@ end
 
 vgui.Register("PA_Move_Button", MOVE_BUTTON, "DButton")
 
-/*---------------------------------------------------------
-   Name: PA_Colour_Panel
-   Common background panel for listviews
----------------------------------------------------------*/
+-----------------------------------------------------------
+--   Name: PA_Colour_Panel
+--   Common background panel for listviews
+-----------------------------------------------------------
 
 local COLOUR_PANEL = {}
 function COLOUR_PANEL:Init()
@@ -751,10 +751,10 @@ end
 
 vgui.Register("PA_Colour_Panel", COLOUR_PANEL, "DPanel")
 
-/*---------------------------------------------------------
-   Name: Constraints Panels
-   Standard panels for constraints tab
----------------------------------------------------------*/
+-----------------------------------------------------------
+--   Name: Constraints Panels
+--   Standard panels for constraints tab
+-----------------------------------------------------------
 
 local CONSTRAINT_TITLE_TEXT = {}
 function CONSTRAINT_TITLE_TEXT:Init()
@@ -809,10 +809,10 @@ end
 -- Base this off PA_XYZ_Slider so the keyboard hook functions apply
 vgui.Register("PA_Constraint_Slider", CONSTRAINT_SLIDER, "PA_XYZ_Slider")
 
-/*---------------------------------------------------------
-   Name: PA_ColourCircle
-   HSV Colour selection wheel for displays tab
----------------------------------------------------------*/
+-----------------------------------------------------------
+--   Name: PA_ColourCircle
+--   HSV Colour selection wheel for displays tab
+-----------------------------------------------------------
 
 local COLOUR_CIRCLE = {}
 function COLOUR_CIRCLE:Init()
@@ -866,10 +866,10 @@ end
 
 vgui.Register("PA_ColourCircle", COLOUR_CIRCLE, "DColorCube")
 
-/*---------------------------------------------------------
-   Name: PA_ColourControl
-   Full HSV Colour selection display for displays tab
----------------------------------------------------------*/
+-----------------------------------------------------------
+--   Name: PA_ColourControl
+--   Full HSV Colour selection display for displays tab
+-----------------------------------------------------------
 
 local HSV_COLOUR_CONTROL = {}
 function HSV_COLOUR_CONTROL:Init()
@@ -890,7 +890,7 @@ function HSV_COLOUR_CONTROL:Init()
             RunConsoleCommand( self.convar .. "_a", A )
         end
         
-    /*
+    --[[
     self.ColourCircle = vgui.Create("PA_ColourCircle", self)
         self.ColourCircle:SetPos(0, 35)
         self.ColourCircle:SetSize(150, 150)
@@ -931,10 +931,10 @@ function HSV_COLOUR_CONTROL:Init()
         end 
         
         -- Remove default alpha bar background image
---[[        self.Bar_Brightness.PerformLayout = function()
+        --[[self.Bar_Brightness.PerformLayout = function()
             DSlider.PerformLayout( self.Bar_Brightness )
         end
-        self.Bar_Brightness.imgBackground:Remove() ]]
+        self.Bar_Brightness.imgBackground:Remove()
     
     AddMenuText( "HSV", 130, 182, self )
     
@@ -956,9 +956,8 @@ function HSV_COLOUR_CONTROL:Init()
         end
      
     AddMenuText( "Alpha", 207, 182, self )
-    
-    
-    */
+    ]]
+
     self.button_defaults = vgui.Create( "PA_Function_Button", self )
         self.button_defaults:SetPos(200, 5)
         self.button_defaults:SetSize(90, 25)
@@ -1006,10 +1005,10 @@ end
 
 vgui.Register("PA_ColourControl", HSV_COLOUR_CONTROL, "DPanel")
 
-/*---------------------------------------------------------
-   Name: PA_Construct_Multiselect
-   Multi construct selection for displays/move constructs tabs
----------------------------------------------------------*/
+---------------------------------------------------------
+--   Name: PA_Construct_Multiselect
+--   Multi construct selection for displays/move constructs tabs
+---------------------------------------------------------
 
 local CONSTRUCT_MULTISELECT = {}
 function CONSTRUCT_MULTISELECT:Init()
@@ -2070,4 +2069,4 @@ local function precision_align_open_panel_func( ply, cmd, args )
         end
     end
 end
-concommand.Add( PA_.."open_panel", precision_align_open_panel_func ) /*
+concommand.Add( PA_.."open_panel", precision_align_open_panel_func )
