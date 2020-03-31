@@ -417,12 +417,12 @@ function POINTS_TAB:Init()
     
     local function update_primary_listview()
         local selection = self.list_primarypoint:GetSelectedLine()
-        if !selection then return false end
+        if not selection then return false end
         
         local point_temp = PA_funcs.point_global( selection )
         local vec
         
-        if !point_temp then
+        if not point_temp then
             vec = Vector(0,0,0)
         else
             vec = point_temp.origin
@@ -454,7 +454,7 @@ function POINTS_TAB:Init()
         self.checkbox_relative1:SetText( "Relative to\nEntity" )
         self.checkbox_relative1:SetSize(100,30)
         self.checkbox_relative1.OnChange = function()
-            if !update_primary_listview() and self.checkbox_relative1:GetChecked() then
+            if not update_primary_listview() and self.checkbox_relative1:GetChecked() then
                 self.checkbox_relative1:SetValue(false)
             end
         end
@@ -515,12 +515,12 @@ function POINTS_TAB:Init()
     
     local function update_secondary_listview()
         local selection = self.list_secondarypoint:GetSelectedLine()
-        if !selection then return false end
+        if not selection then return false end
         
         local point_temp = PA_funcs.point_global( selection )
         local vec
         
-        if !point_temp then
+        if not point_temp then
             vec = Vector(0,0,0)
         else
             vec = point_temp.origin
@@ -553,7 +553,7 @@ function POINTS_TAB:Init()
         self.checkbox_relative2:SetSize(100,30)
         self.checkbox_relative2:SetText( "Relative to\nEntity" )
         self.checkbox_relative2.OnChange = function()
-            if !update_secondary_listview() and self.checkbox_relative2:GetChecked() then
+            if not update_secondary_listview() and self.checkbox_relative2:GetChecked() then
                 self.checkbox_relative2:SetValue(false)
             end
         end
@@ -702,7 +702,7 @@ function POINTS_TAB:Init()
             local selected_point1 = self.list_primarypoint:GetSelectedLine()
             local selected_point2 = self.list_secondarypoint:GetSelectedLine()
             
-            if !selected_point1 or !selected_point2 then
+            if not selected_point1 or not selected_point2 then
                 Warning("Select both a primary and secondary point")
                 return false
             end
@@ -715,12 +715,12 @@ function POINTS_TAB:Init()
             local point1 = PA_funcs.point_global(selected_point1)
             local point2 = PA_funcs.point_global(selected_point2)
             
-            if !point1 or !point2 then
+            if not point1 or not point2 then
                 Warning("Points not correctly defined")
                 return false
             end
             
-            if !PA_funcs.move_entity(point1.origin, point2.origin, PA_activeent) then return false end
+            if not PA_funcs.move_entity(point1.origin, point2.origin, PA_activeent) then return false end
         end )
     
 end
@@ -762,12 +762,12 @@ function LINES_TAB:Init()
     
     local function update_primary_listview()
         local selection = self.list_primary:GetSelectedLine()
-        if !selection then return false end
+        if not selection then return false end
         
         local line_temp = PA_funcs.line_global( selection )
         local startpoint, endpoint, direction, length, angle
         
-        if !line_temp then
+        if not line_temp then
             startpoint = Vector(0,0,0)
             endpoint = Vector(0,0,0)
             direction = Vector(0,0,0)
@@ -863,7 +863,7 @@ function LINES_TAB:Init()
         self.checkbox_relative:SetText( "Relative to\nEntity" )
         self.checkbox_relative:SetSize(100,30)
         self.checkbox_relative.OnChange = function()
-            if !update_primary_listview() and self.checkbox_relative:GetChecked() then
+            if not update_primary_listview() and self.checkbox_relative:GetChecked() then
                 self.checkbox_relative:SetValue(false)
             end
         end
@@ -1042,7 +1042,7 @@ function LINES_TAB:Init()
         self.functions_button_default_length:SetToolTip( "Sets the default length to the current length slider value" )
         self.functions_button_default_length:SetFunction( function()
             local length = self.slider_length:GetValue()
-            if !(length > 0) then
+            if not (length > 0) then
                 Warning("Length must be greater than 0")
                 return false
             end
@@ -1058,7 +1058,7 @@ function LINES_TAB:Init()
         self.functions_button_copy_start:SetToolTip( "Copy start point from the selected line" )
         self.functions_button_copy_start:SetFunction( function()
             local line = single_line_selection()
-            if !line then
+            if not line then
                 return false
             end
             self.sliders_startpoint:SetValues(line.startpoint)
@@ -1071,7 +1071,7 @@ function LINES_TAB:Init()
         self.functions_button_copy_end:SetToolTip( "Copy end point from the selected line" )
         self.functions_button_copy_end:SetFunction( function()
             local line = single_line_selection()
-            if !line then
+            if not line then
                 return false
             end
             self.sliders_endpoint:SetValues(line.endpoint)
@@ -1084,7 +1084,7 @@ function LINES_TAB:Init()
         self.functions_button_copy_dir:SetToolTip( "Copy direction from the selected line" )
         self.functions_button_copy_dir:SetFunction( function()
             local line = single_line_selection()
-            if !line then
+            if not line then
                 return false
             end
             local dir = (line.endpoint - line.startpoint):GetNormal()
@@ -1098,7 +1098,7 @@ function LINES_TAB:Init()
         self.functions_button_copy_length:SetToolTip( "Copy length from the selected line" )
         self.functions_button_copy_length:SetFunction( function()
             local line = single_line_selection()
-            if !line then
+            if not line then
                 return false
             end
             local length = (line.endpoint - line.startpoint):Length()
@@ -1131,7 +1131,7 @@ function LINES_TAB:Init()
         self.functions_button_addlines:SetToolTip( "Add the selected lines as vectors to the current endpoint" )
         self.functions_button_addlines:SetFunction( function()
             local selection = self.functions_list_functionlines:GetSelected()
-            if !selection then
+            if not selection then
                 Warning("Select at least 1 line")
                 return false
             end
@@ -1159,18 +1159,18 @@ function LINES_TAB:Init()
         self.button_moveentity:SetToolTip( "Move entity by line" )
         self.button_moveentity:SetFunction( function()      
             local selection = self.list_primary:GetSelectedLine()
-            if !selection then
+            if not selection then
                 Warning("Select a line")
                 return false
             end
             
-            if !PA_funcs.construct_exists( "Line", selection ) then
+            if not PA_funcs.construct_exists( "Line", selection ) then
                 Warning("Line not correctly defined")
                 return false
             end
             
             local line = PA_funcs.line_global(selection)
-            if !PA_funcs.move_entity(line.startpoint, line.endpoint, PA_activeent) then return false end
+            if not PA_funcs.move_entity(line.startpoint, line.endpoint, PA_activeent) then return false end
         end )
 end
 
@@ -1204,7 +1204,7 @@ function PLANES_TAB:Init()
         if normal then self.sliders_normal:SetValues(normal) end
         
         if angle then
-            if !normal or normal == Vector(0,0,0) then angle = Angle(0,0,0) end
+            if not normal or normal == Vector(0,0,0) then angle = Angle(0,0,0) end
             if math.abs(angle.p) > 89.999 then  angle.y = 0 end
             
             self.slider_ang_p:SetValue(angle.p)
@@ -1215,12 +1215,12 @@ function PLANES_TAB:Init()
     
     local function update_primary_listview()
         local selection = self.list_primary:GetSelectedLine()
-        if !selection then return false end
+        if not selection then return false end
         
         local plane_temp = PA_funcs.plane_global( selection )
         local origin, normal, angle
         
-        if !plane_temp then
+        if not plane_temp then
             origin = Vector(0,0,0)
             normal = Vector(0,0,0)
             angle = Angle(0,0,0)
@@ -1307,7 +1307,7 @@ function PLANES_TAB:Init()
         self.checkbox_relative:SetText( "Relative to\nEntity" )
         self.checkbox_relative:SetSize(100,30)
         self.checkbox_relative.OnChange = function()
-            if !update_primary_listview() and self.checkbox_relative:GetChecked() then
+            if not update_primary_listview() and self.checkbox_relative:GetChecked() then
                 self.checkbox_relative:SetValue(false)
             end
         end
@@ -1410,7 +1410,7 @@ function PLANES_TAB:Init()
         self.functions_button_copy_origin:SetToolTip( "Copy origin from the selected plane" )
         self.functions_button_copy_origin:SetFunction( function()
             local plane = single_plane_selection()
-            if !plane then
+            if not plane then
                 return false
             end
             self.sliders_origin:SetValues(plane.origin)
@@ -1423,7 +1423,7 @@ function PLANES_TAB:Init()
         self.functions_button_copy_normal:SetToolTip( "Copy normal from the selected plane" )
         self.functions_button_copy_normal:SetFunction( function()
             local plane = single_plane_selection()
-            if !plane then
+            if not plane then
                 return false
             end
             self.sliders_normal:SetValues(plane.normal)
@@ -1562,12 +1562,12 @@ function MOVE_TAB:Init()
         self.button_axisrotate_angle:SetFunction( function()
             local selected_line = self.list_line_axis:GetSelectedLine()
             
-            if !selected_line then
+            if not selected_line then
                 Warning("Select an axis line")
                 return false
             end
             
-            if !PA_funcs.construct_exists( "Line", selected_line ) then
+            if not PA_funcs.construct_exists( "Line", selected_line ) then
                 Warning("Line not correctly defined")
                 return false
             end
@@ -1575,7 +1575,7 @@ function MOVE_TAB:Init()
             -- Check construct selections
             local selection_constructs = self.panel_multiselect:GetSelection()
             
-            if !selection_constructs then
+            if not selection_constructs then
                 Warning( "No valid constructs selected for move" )
                 return false
             end
@@ -1647,7 +1647,7 @@ function MOVE_TAB:Init()
         self.button_move_constructs:SetText( "Set" )
         self.button_move_constructs:SetToolTip( "Move the selected constructs" )
         self.button_move_constructs:SetFunction( function()
-            if !self.activebutton then
+            if not self.activebutton then
                 Warning("No function selected")
                 return false
             end
@@ -1658,29 +1658,29 @@ function MOVE_TAB:Init()
             -- Check primary selection
             if selection_type == "Point" then
                 local point1, point2 = self.list_point_1:GetSelectedLine(), self.list_point_2:GetSelectedLine()
-                if !point1 then
+                if not point1 then
                     Warning( "Select Point 1" ) return false
-                elseif !point2 then
+                elseif not point2 then
                     Warning( "Select Point 2" ) return false
-                elseif !PA_funcs.construct_exists( "Point", point1 ) then
+                elseif not PA_funcs.construct_exists( "Point", point1 ) then
                     Warning( "Point " .. tostring(point1) .. " not defined" ) return false
-                elseif !PA_funcs.construct_exists( "Point", point2 ) then
+                elseif not PA_funcs.construct_exists( "Point", point2 ) then
                     Warning( "Point " .. tostring(point2) .. " not defined" ) return false
                 end
                 selection_primary = { point1, point2 }
             elseif selection_type == "Line" then
                 local line = self.list_line_1:GetSelectedLine()
-                if !line then
+                if not line then
                     Warning( "Select Line 1" ) return false
-                elseif !PA_funcs.construct_exists( "Line", line ) then
+                elseif not PA_funcs.construct_exists( "Line", line ) then
                     Warning( "Line " .. tostring(line) .. " not defined" ) return false
                 end
                 selection_primary = { line }
             elseif selection_type == "Plane" then
                 local plane = self.list_plane_1:GetSelectedLine()
-                if !plane then
+                if not plane then
                     Warning( "Select Plane 1" ) return false
-                elseif !PA_funcs.construct_exists( "Plane", plane ) then
+                elseif not PA_funcs.construct_exists( "Plane", plane ) then
                     Warning( "Plane " .. tostring(plane) .. " not defined" ) return false
                 end
                 selection_primary = { plane }
@@ -1692,7 +1692,7 @@ function MOVE_TAB:Init()
             -- Check construct selections
             local selection_constructs = self.panel_multiselect:GetSelection()
             
-            if !selection_constructs then
+            if not selection_constructs then
                 Warning( "No valid constructs selected for move" )
                 return false
             end
@@ -1823,7 +1823,7 @@ function MOVE_TAB:Init()
             -- Check construct selections
             local selection_constructs = self.panel_multiselect:GetSelection()
             
-            if !selection_constructs then
+            if not selection_constructs then
                 Warning( "No valid constructs selected for move" )
                 return false
             end
@@ -1961,7 +1961,7 @@ function FUNCTIONS_TAB:Init()
         self.button_set:SetText( "Set" )
         self.button_set:SetToolTip( "Execute the selected function" )
         self.button_set:SetFunction( function()
-            if !self.activebutton then
+            if not self.activebutton then
                 Warning("No function selected")
                 return false
             end
@@ -1979,7 +1979,7 @@ function FUNCTIONS_TAB:Init()
                 selection_primary = self.list_plane_primary:GetSelectedLine()
             end
             
-            if !selection_primary then
+            if not selection_primary then
                 Warning( "Select a primary " .. string.lower(selection_type[1]) )
                 return false
             end
@@ -2003,7 +2003,7 @@ function FUNCTIONS_TAB:Init()
                     -- Check the selections point to valid constructs
                     for l, w in pairs (selection) do
                         local ID = w:GetID()
-                        if !PA_funcs.construct_exists( string_table[k], ID ) then
+                        if not PA_funcs.construct_exists( string_table[k], ID ) then
                             Warning( string_table[k] .. " " .. tostring(ID) .. " has not been defined" )
                             return false
                         end
@@ -2268,7 +2268,7 @@ function FUNCTIONS_TAB:Init()
         self.button_plane_2lines.selections = { "Plane", 0, 2, 0 }
         self.button_plane_2lines.func = function( selection_primary, selection_secondary )
             local direction = PA_funcs.line_function_perpendicular( selection_secondary[1], selection_secondary[2] )
-            if !direction then return false end
+            if not direction then return false end
             local origin = ( PA_funcs.line_global(selection_secondary[1]).startpoint + PA_funcs.line_global(selection_secondary[2]).startpoint ) * 0.5
             return PA_funcs.set_plane( selection_primary, origin, direction )
         end
@@ -2337,7 +2337,7 @@ function ROTATION_TAB:Init()
         self.checkbox_relative1:SetSize(100,30)
         self.checkbox_relative1.OnChange = function()
             local ent, ang
-            if !PA_activeent and self.checkbox_relative1:GetChecked() then
+            if not PA_activeent and self.checkbox_relative1:GetChecked() then
                 self.checkbox_relative1:SetValue(false)
             elseif self.checkbox_relative1:GetChecked() then
                 self.checkbox_relative1.lastentity = PA_activeent
@@ -2345,7 +2345,7 @@ function ROTATION_TAB:Init()
                 ang = PA_activeent:WorldToLocalAngles( ToAngle(ang) )
                 self.sliders_angle1:SetValues( ToVector(ang) )
             else
-                if !PA_activeent then
+                if not PA_activeent then
                     if self.checkbox_relative1.lastentity then
                         ent = self.checkbox_relative1.lastentity
                         self.checkbox_relative1.lastentity = nil
@@ -2383,7 +2383,7 @@ function ROTATION_TAB:Init()
                 relative = 1
                 --ang = PA_activeent:LocalToWorldAngles( ang )
             end
-            if !PA_funcs.rotate_entity(ang, vec, relative, PA_activeent) then return false end
+            if not PA_funcs.rotate_entity(ang, vec, relative, PA_activeent) then return false end
         end )
     
     self.button_get1 = vgui.Create( "PA_Move_Button", self )
@@ -2517,7 +2517,7 @@ function ROTATION_TAB:Init()
         self.checkbox_relative2:SetSize(100,30)
         self.checkbox_relative2.OnChange = function()
             local ent, ang
-            if !PA_activeent and self.checkbox_relative2:GetChecked() then
+            if not PA_activeent and self.checkbox_relative2:GetChecked() then
                 self.checkbox_relative2:SetValue(false)
             elseif self.checkbox_relative2:GetChecked() then
                 self.checkbox_relative2.lastentity = PA_activeent
@@ -2525,7 +2525,7 @@ function ROTATION_TAB:Init()
                 ang = PA_activeent:WorldToLocalAngles( ToAngle(ang) )
                 self.sliders_angle2:SetValues( ToVector(ang) )
             else
-                if !PA_activeent then
+                if not PA_activeent then
                     if self.checkbox_relative2.lastentity then
                         ent = self.checkbox_relative2.lastentity
                         self.checkbox_relative2.lastentity = nil
@@ -2608,12 +2608,12 @@ function ROTATION_TAB:Init()
         self.button_axisrotate_angle:SetFunction( function()
             local selected_line = self.list_line_axis:GetSelectedLine()
             
-            if !selected_line then
+            if not selected_line then
                 Warning("Select an axis line")
                 return false
             end
             
-            if !PA_funcs.construct_exists( "Line", selected_line ) then
+            if not PA_funcs.construct_exists( "Line", selected_line ) then
                 Warning("Line not correctly defined")
                 return false
             end
@@ -2639,14 +2639,14 @@ function ROTATION_TAB:Init()
         self.button_axisrotate_entity:SetFunction( function()
             local selected_line = self.list_line_axis:GetSelectedLine()
             
-            if !selected_line then
+            if not selected_line then
                 Warning("Select a line")
                 return false
             end
             
             local line = PA_funcs.line_global(selected_line)
             
-            if !line then
+            if not line then
                 Warning("Line not correctly defined")
                 return false
             end
@@ -2669,7 +2669,7 @@ function ROTATION_TAB:Init()
             
             local relative = 3
             
-            if !PA_funcs.rotate_entity(ang, vec, relative, PA_activeent) then return false end
+            if not PA_funcs.rotate_entity(ang, vec, relative, PA_activeent) then return false end
         end )
     
     
@@ -2727,7 +2727,7 @@ function ROTATION_TAB:Init()
             
             local relative = 2
             
-            if !PA_funcs.rotate_entity(ang, vec, relative, PA_activeent) then return false end
+            if not PA_funcs.rotate_entity(ang, vec, relative, PA_activeent) then return false end
         end )
 end
 
@@ -2830,7 +2830,7 @@ function ROTATION_FUNCTIONS_TAB:Init()
         self.button_set:SetText( "Rotate Entity" )
         self.button_set:SetToolTip( "Execute the selected function" )
         self.button_set:SetFunction( function()
-            if !self.activebutton then
+            if not self.activebutton then
                 Warning("No function selected")
                 return false
             end
@@ -2843,13 +2843,13 @@ function ROTATION_FUNCTIONS_TAB:Init()
             for k, v in pairs (selection_lists) do
                 if v:IsVisible() then
                     local selection = v:GetSelectedLine()
-                    if !selection then
+                    if not selection then
                         local str = "Selections not correct - " .. string_table[k] .. " must be selected"
                         Warning( str )
                         return false
                     end
                     
-                    if !PA_funcs.construct_exists( string_table2[k], selection ) then
+                    if not PA_funcs.construct_exists( string_table2[k], selection ) then
                         Warning( string_table2[k] .. " " .. tostring(selection) .. " has not been defined" )
                         return false
                     end
@@ -2860,7 +2860,7 @@ function ROTATION_FUNCTIONS_TAB:Init()
             -- Filter out non-existant pivot / axis selections before passing to functions
             local pivot = self.list_pivotpoint:GetSelectedLine()
             if pivot then
-                if !PA_funcs.construct_exists( "Point", pivot ) then
+                if not PA_funcs.construct_exists( "Point", pivot ) then
                     pivot = nil
                 else
                     pivot = PA_funcs.point_global( pivot ).origin
@@ -2869,14 +2869,14 @@ function ROTATION_FUNCTIONS_TAB:Init()
             
             local axis = self.list_line_axis:GetSelectedLine()
             if axis then
-                if !PA_funcs.construct_exists( "Line", axis ) then
+                if not PA_funcs.construct_exists( "Line", axis ) then
                     axis = nil
                 else
                     axis = PA_funcs.line_global( axis )
                 end
             end
             
-            if !self.activebutton.func( pivot, axis, selections ) then
+            if not self.activebutton.func( pivot, axis, selections ) then
                 return false
             end
         end )
@@ -2974,7 +2974,7 @@ function ROTATION_FUNCTIONS_TAB:Init()
             if PA_funcs.rotate_2lines_parallel( pivot, selections[1], selections[2], PA_activeent ) then
                 local vec1 = PA_funcs.line_global( selections[1] ).startpoint
                 local vec2 = PA_funcs.line_global( selections[2] ).startpoint
-                if !vec1 or !vec2 then
+                if not vec1 or not vec2 then
                     return false
                 end
                 
@@ -3092,12 +3092,12 @@ function CONSTRAINTS_TAB:Init()
             local selection1 = self.list_point_LPos1:GetSelectedLine()
             local selection2 = self.list_point_LPos2:GetSelectedLine()
             
-            if !selection1 then
+            if not selection1 then
                 Warning("Select a point for Pos 1")
                 return false
             end
             
-            if !PA_funcs.construct_exists( "Point", selection1 ) then
+            if not PA_funcs.construct_exists( "Point", selection1 ) then
                 Warning("Point 1 has not been defined")
                 return false
             end
@@ -3106,12 +3106,12 @@ function CONSTRAINTS_TAB:Init()
             local constraint_type = activepanel.Constraint
             
             if constraint_type ~= "Axis" and constraint_type ~= "Ballsocket" and constraint_type ~= "Ballsocket Advanced" then
-                if !selection2 then
+                if not selection2 then
                     Warning("Select a point for Pos 2")
                     return false
                 end
             
-                if !PA_funcs.construct_exists( "Point", selection2 ) then
+                if not PA_funcs.construct_exists( "Point", selection2 ) then
                     Warning("Point 2 has not been defined")
                     return false
                 end
@@ -3121,7 +3121,7 @@ function CONSTRAINTS_TAB:Init()
             local point1 = precision_align_points[ selection1 ]
             local point2
             
-            if !PA_funcs.construct_exists( "Point", selection2 ) then
+            if not PA_funcs.construct_exists( "Point", selection2 ) then
                 point2 = { ["origin"] = PA_funcs.point_global(selection1).origin + Vector(0,0,1) }  -- Set so default axis dir is (0,0,1)
             else
                 point2 = precision_align_points[ selection2 ]
@@ -3130,7 +3130,7 @@ function CONSTRAINTS_TAB:Init()
             local Ent1 = point1.entity
             local Ent2 = point2.entity
                         
-            if !Ent1 and !Ent2 then
+            if not Ent1 and not Ent2 then
                 Warning("At least one point must be attached to an entity")
                 return false
             end
@@ -3699,7 +3699,7 @@ function CONSTRAINTS_WIRE_HYDRAULIC_TAB:Init()
         self.matselect:SetConVar( PA_ .. "wire_hydraulic_material" )
     
     self.Constraint_Func = function()
-        if !IsValid( PA_activeent ) then
+        if not IsValid( PA_activeent ) then
             Warning( "Select a wire hydraulic controller" )
             return false
         end

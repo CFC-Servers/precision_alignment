@@ -277,18 +277,18 @@ local function Queue_Process()
     local ent_table = table.remove( stack_queue, 1 )
     
     -- Stop processing the stack queue
-    if !ent_table then
+    if not ent_table then
         last_ent = nil
         processing = false
         return false
     end
     
     local ply = ent_table.ply
-    if !IsValid( ply ) then return false end
+    if not IsValid( ply ) then return false end
     
     -- Stack entity
     local ent = duplicator.CreateEntityFromTable( ply, ent_table.data )
-    if !IsValid( ent ) then return false end
+    if not IsValid( ent ) then return false end
     
     local stackID = ent_table.stackID
     
@@ -306,7 +306,7 @@ local function Queue_Process()
         end
         
         -- Nocollide selected ent with final stacked ent
-        if !stack_queue[1] or stackID ~= stack_queue[1].stackID then
+        if not stack_queue[1] or stackID ~= stack_queue[1].stackID then
             constraint.NoCollide( ent, ent_table.data.Entity )
             last_ent = nil
         else
@@ -396,7 +396,7 @@ local function Queue_Add( ply, ent, stackID )
     table.insert( stack_queue, ent_table )
     
     -- Start processing the stack queue
-    if !processing then
+    if not processing then
         processing = true
         local Delay = GetConVarNumber( PA_ .. "stack_delay", 0.1 )
         
@@ -415,10 +415,10 @@ end
 -- 4 = Stack number
 -- 5 = Repeat flag
 function precision_align_move_func( ply, cmd, args )
-    if !ply.PA_activeent then return false end
+    if not ply.PA_activeent then return false end
     local ent = ply.PA_activeent
-    if !IsValid(ent) then return false end
-    if !util.IsValidPhysicsObject(ent, 0) or IsValid(ent:GetParent()) then return false end
+    if not IsValid(ent) then return false end
+    if not util.IsValidPhysicsObject(ent, 0) or IsValid(ent:GetParent()) then return false end
     
     local v = Vector(args[1], args[2], args[3])
     if v == Vector(0,0,0) then return false end
@@ -454,7 +454,7 @@ function precision_align_move_func( ply, cmd, args )
     undo.Finish()
     
     -- Record action
-    if !args[5] then
+    if not args[5] then
         action_table[ply] = args
         action_table[ply][5] = true
         action_table[ply].cmd = precision_align_move_func
@@ -473,13 +473,13 @@ concommand.Add( PA_.. "move", precision_align_move_func )
 
 -- Rotate by world axes
 local function rotate_world( ang, rotang )
-    if rotang.p != 0 then
+    if rotang.p ~= 0 then
         ang:RotateAroundAxis( Vector(0,1,0), rotang.p )
     end
-    if rotang.y != 0 then
+    if rotang.y ~= 0 then
         ang:RotateAroundAxis( Vector(0,0,1), rotang.y )
     end
-    if rotang.r != 0 then
+    if rotang.r ~= 0 then
         ang:RotateAroundAxis( Vector(1,0,0), rotang.r )
     end
 
@@ -488,7 +488,7 @@ end
 
 -- Convert from euler to axis-angle by quaternion method
 local function euler_to_axisangle( ang )
-    if !ang then return false end
+    if not ang then return false end
 
     ang = Angle( math.rad( ang.p ), math.rad( ang.y ), math.rad( ang.r ) ) * 0.5
     
@@ -526,12 +526,12 @@ end
 -- 8 = Stack number
 -- 9 = Repeat flag
 function precision_align_rotate_func( ply, cmd, args )
-    if !ply.PA_activeent then return false end
+    if not ply.PA_activeent then return false end
     local ent = ply.PA_activeent
-    if !IsValid(ent) then return false end
-    if !util.IsValidPhysicsObject(ent, 0) or IsValid(ent:GetParent()) then return false end
+    if not IsValid(ent) then return false end
+    if not util.IsValidPhysicsObject(ent, 0) or IsValid(ent:GetParent()) then return false end
     
-    if !tonumber(args[1]) or !tonumber(args[2]) or !tonumber(args[3]) then
+    if not tonumber(args[1]) or not tonumber(args[2]) or not tonumber(args[3]) then
         return false
     end
     
@@ -564,7 +564,7 @@ function precision_align_rotate_func( ply, cmd, args )
     
     -- Get pivot point
     local v
-    if !tonumber(args[4]) or !tonumber(args[5]) or !tonumber(args[6]) then
+    if not tonumber(args[4]) or not tonumber(args[5]) or not tonumber(args[6]) then
         v = startpos
     else
         v = Vector( tonumber(args[4]), tonumber(args[5]), tonumber(args[6]) )
@@ -623,7 +623,7 @@ function precision_align_rotate_func( ply, cmd, args )
     undo.Finish()
     
     -- Record action
-    if !args[9] then
+    if not args[9] then
         action_table[ply] = args
         action_table[ply][9] = true
         action_table[ply].cmd = precision_align_rotate_func
@@ -649,10 +649,10 @@ concommand.Add( PA_.. "rotate", precision_align_rotate_func )
 -- 7 = Stack number
 -- 8 = Repeat flag
 function precision_align_mirror_func( ply, cmd, args )
-    if !ply.PA_activeent then return false end
+    if not ply.PA_activeent then return false end
     local ent = ply.PA_activeent
-    if !IsValid(ent) then return false end
-    if !util.IsValidPhysicsObject(ent, 0) or IsValid(ent:GetParent()) then return false end
+    if not IsValid(ent) then return false end
+    if not util.IsValidPhysicsObject(ent, 0) or IsValid(ent:GetParent()) then return false end
     
     local origin = Vector(args[1], args[2], args[3])
     local normal = Vector(args[4], args[5], args[6])
@@ -686,7 +686,7 @@ function precision_align_mirror_func( ply, cmd, args )
     exceptionang = PA_mirror_exceptions_specific[model]
     
     -- Match left part of string
-    if !exceptionang then
+    if not exceptionang then
         local PA_mirror_exceptions = list.Get( "PA_mirror_exceptions" )
         for k, v in pairs( PA_mirror_exceptions ) do
             if string.match( model, "^" .. k ) then
@@ -721,7 +721,7 @@ function precision_align_mirror_func( ply, cmd, args )
     ent:GetPhysicsObject():EnableMotion( false )
     
     -- Record action
-    if !args[8] then
+    if not args[8] then
         action_table[ply] = args
         action_table[ply][8] = true
         action_table[ply].cmd = precision_align_mirror_func
@@ -751,22 +751,22 @@ function precision_align_constraint_func( len, ply )
     
     if CPPI then
         if Ent1:IsWorld() then
-            if !util.IsValidPhysicsObject(Ent2, 0) or !Ent2:CPPICanTool( ply, PA ) then
+            if not util.IsValidPhysicsObject(Ent2, 0) or not Ent2:CPPICanTool( ply, PA ) then
                 return false
             end
         elseif Ent2:IsWorld() then
-            if !util.IsValidPhysicsObject(Ent1, 0) or !Ent1:CPPICanTool( ply, PA ) then
+            if not util.IsValidPhysicsObject(Ent1, 0) or not Ent1:CPPICanTool( ply, PA ) then
                 return false
             end
-        elseif !util.IsValidPhysicsObject(Ent1, 0) or !util.IsValidPhysicsObject(Ent2, 0) then
+        elseif not util.IsValidPhysicsObject(Ent1, 0) or not util.IsValidPhysicsObject(Ent2, 0) then
             return false
-        elseif !Ent1:CPPICanTool( ply, PA ) or !Ent2:CPPICanTool( ply, PA ) then
+        elseif not Ent1:CPPICanTool( ply, PA ) or not Ent2:CPPICanTool( ply, PA ) then
             return false
         end
     else
-        if Ent1:IsWorld() and !util.IsValidPhysicsObject(Ent2, 0) then
+        if Ent1:IsWorld() and not util.IsValidPhysicsObject(Ent2, 0) then
             return false
-        elseif Ent2:IsWorld() and !util.IsValidPhysicsObject(Ent1, 0) then
+        elseif Ent2:IsWorld() and not util.IsValidPhysicsObject(Ent1, 0) then
             return false
         end
     end
@@ -827,7 +827,7 @@ function precision_align_constraint_func( len, ply )
         local forcelimit = ply:GetInfoNum( PA_.. "rope_forcelimit", 0 )
         local width = ply:GetInfoNum( PA_.. "rope_width", 1 )
         local material = ply:GetInfo( PA_.. "rope_material", "cable/rope" )
-        local rigid = ply:GetInfoNum( PA_.. "rope_rigid", 0 ) != 0
+        local rigid = ply:GetInfoNum( PA_.. "rope_rigid", 0 ) ~= 0
         
         local length = ply:GetInfoNum( PA_.. "rope_setlength", 0 )
         local addlength = 0
@@ -845,7 +845,7 @@ function precision_align_constraint_func( len, ply )
     
     elseif constraint_type == "Wire Hydraulic" then
         local controller = Entity( vars )
-        if !IsValid( controller ) then return false end
+        if not IsValid( controller ) then return false end
         if controller:GetClass() ~= "gmod_wire_hydraulic" then
             print( "PA Error: Tried to create wire hydraulic with invalid controller ent" )
             return false
@@ -917,13 +917,13 @@ net.Receive( PA_.. "constraint", precision_align_constraint_func )
 
 -- Keep a record of each player's last PA action
 function precision_align_lastaction_func( ply, cmd, args )
-    if !ply.PA_activeent then return false end
+    if not ply.PA_activeent then return false end
     local ent = ply.PA_activeent
-    if !IsValid(ent) then return false end
-    if !util.IsValidPhysicsObject(ent, 0) or IsValid(ent:GetParent()) then return false end
+    if not IsValid(ent) then return false end
+    if not util.IsValidPhysicsObject(ent, 0) or IsValid(ent:GetParent()) then return false end
     
     local lastaction = action_table[ply]
-    if !lastaction then return false end
+    if not lastaction then return false end
     
     return lastaction.cmd( ply, nil, lastaction )
 end

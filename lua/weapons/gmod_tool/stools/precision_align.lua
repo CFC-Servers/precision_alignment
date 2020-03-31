@@ -259,7 +259,7 @@ function TOOL:GetClickPosition( trace )
     
     local tooltype = self:GetClientNumber( "tooltype" )
     
-    if ( !Phys or !Ent or Ent:IsWorld() ) then
+    if ( not Phys or not Ent or Ent:IsWorld() ) then
         Pos = trace.HitPos
     
     -- Coordinate Centre
@@ -324,15 +324,15 @@ function TOOL:GetClickPosition( trace )
             Centre_Dist = CentrePosL - HitPosL
             
             -- NewPosL is already equal to CentrePosL, so only need to set cases where EdgePosL is smaller
-            if ( math.abs( Edge_Dist.x ) < math.abs( Centre_Dist.x ) and Snapped_Edges.x ) or !Snapped_Centres.x then
+            if ( math.abs( Edge_Dist.x ) < math.abs( Centre_Dist.x ) and Snapped_Edges.x ) or not Snapped_Centres.x then
                 NewPosL.x = EdgePosL.x
             end
             
-            if ( math.abs( Edge_Dist.y ) < math.abs( Centre_Dist.y ) and Snapped_Edges.y ) or !Snapped_Centres.y  then
+            if ( math.abs( Edge_Dist.y ) < math.abs( Centre_Dist.y ) and Snapped_Edges.y ) or not Snapped_Centres.y  then
                 NewPosL.y = EdgePosL.y
             end
             
-            if ( math.abs( Edge_Dist.z ) < math.abs( Centre_Dist.z ) and Snapped_Edges.z ) or !Snapped_Centres.z  then
+            if ( math.abs( Edge_Dist.z ) < math.abs( Centre_Dist.z ) and Snapped_Edges.z ) or not Snapped_Centres.z  then
                 NewPosL.z = EdgePosL.z
             end
         end
@@ -347,14 +347,14 @@ end
 
 -- Place Constructs
 function TOOL:LeftClick( trace )
-    if !trace.HitPos then return false end  
+    if not trace.HitPos then return false end  
     if CLIENT then return true end
     
     local point = self:GetClickPosition( trace )
     local normal = trace.HitNormal
     local ent = trace.Entity
     
-    if !IsValid(ent) then
+    if not IsValid(ent) then
         ent = nil
     end
     
@@ -371,9 +371,9 @@ function TOOL:RightClick( trace )
         return true
     end
 
-    if !IsValid(trace.Entity) then
+    if not IsValid(trace.Entity) then
         return false
-    elseif !util.IsValidPhysicsObject( trace.Entity, trace.PhysicsBone ) then
+    elseif not util.IsValidPhysicsObject( trace.Entity, trace.PhysicsBone ) then
         return false
     elseif trace.Entity:IsPlayer() then
         return false

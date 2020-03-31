@@ -407,7 +407,7 @@ end
 
 -- Override mouse functions (make it into a toggle button)
 function FUNCTION_BUTTON_2:OnMousePressed( mousecode )
-    if !self.Depressed then
+    if not self.Depressed then
         -- pop up any previously depressed buttons
         for k, v in pairs (function_buttons_2_list) do
             if v.Depressed then
@@ -469,7 +469,7 @@ end
 
 -- Override mouse functions (make it into a toggle button)
 function FUNCTION_BUTTON_3:OnMousePressed( mousecode )
-    if !self.Depressed then
+    if not self.Depressed then
         -- pop up any previously depressed buttons
         for k, v in pairs (function_buttons_3_list) do
             if v.Depressed then
@@ -554,7 +554,7 @@ end
 
 -- Override mouse functions (make it into a toggle button)
 function FUNCTION_BUTTON_ROTATION:OnMousePressed( mousecode )
-    if !self.Depressed then
+    if not self.Depressed then
         -- pop up any previously depressed buttons
         for k, v in pairs (rotation_function_buttons_list) do
             if v.Depressed then
@@ -716,7 +716,7 @@ end
 function MOVE_BUTTON:Think()
     if IsValid(PA_activeent) and self:GetDisabled() then
         self:SetDisabled(false)
-    elseif !IsValid(PA_activeent) and !self:GetDisabled() then
+    elseif not IsValid(PA_activeent) and not self:GetDisabled() then
         self:SetDisabled(true)
     end
 end
@@ -779,7 +779,7 @@ function CONSTRAINTS_SHEET:AddComboBox( data )
     ctrl:SetPreset( data.folder )
     if ( data.options ) then
         for k, v in pairs( data.options ) do
-            if ( k != "id" ) then -- Some txt file configs still have an `ID'. But these are redundant now.
+            if ( k ~= "id" ) then -- Some txt file configs still have an `ID'. But these are redundant now.
                 ctrl:AddOption( k, v )
             end
         end
@@ -1252,7 +1252,7 @@ end
 -- Open a particular tab in the manipulation panel
 local function Open_Manipulation_Tab( Tab )
     PA_manipulation_panel.panel:SetActiveTab( Tab )
-    if !PA_manipulation_panel:IsVisible() then
+    if not PA_manipulation_panel:IsVisible() then
         PA_manipulation_panel:SetVisible(true)
     end
 end
@@ -1308,7 +1308,7 @@ function TOOL_POINT_PANEL:Init()
     create_buttons_standard( self, "point" )
     
         self.button_view:SetFunction( function()
-            if !PA_funcs.construct_exists( "Point", PA_selected_point ) then return false end
+            if not PA_funcs.construct_exists( "Point", PA_selected_point ) then return false end
             local point = PA_funcs.point_global( PA_selected_point )
             return PA_funcs.set_playerview( point.origin )
         end )
@@ -1342,12 +1342,12 @@ function TOOL_POINT_PANEL:Init()
             local point1 = PA_funcs.point_global( PA_selected_point )
             local point2 = PA_funcs.point_global( PA_selected_point2 )
             
-            if !point1 or !point2 then
+            if not point1 or not point2 then
                 Warning("Points not correctly defined")
                 return false
             end
             
-            if !PA_funcs.move_entity(point1.origin, point2.origin, PA_activeent) then return false end
+            if not PA_funcs.move_entity(point1.origin, point2.origin, PA_activeent) then return false end
         end )
 end
 
@@ -1388,7 +1388,7 @@ function TOOL_LINE_PANEL:Init()
     create_buttons_standard( self, "line" )
     
         self.button_view:SetFunction( function()
-            if !PA_funcs.construct_exists( "Line", PA_selected_line ) then return false end
+            if not PA_funcs.construct_exists( "Line", PA_selected_line ) then return false end
             local line = PA_funcs.line_global( PA_selected_line )
             return PA_funcs.set_playerview( line.startpoint )
         end )
@@ -1413,14 +1413,14 @@ function TOOL_LINE_PANEL:Init()
         self.button_moveentity:SetToolTip( "Move entity by line" )
         self.button_moveentity:SetFunction( function()
             local line = PA_funcs.line_global(PA_selected_line)
-            if !line then
+            if not line then
                 Warning("Line not correctly defined")
                 return false
             end
             
             local point1 = line.startpoint
             local point2 = line.endpoint
-            if !PA_funcs.move_entity(point1, point2, PA_activeent) then return false end
+            if not PA_funcs.move_entity(point1, point2, PA_activeent) then return false end
         end )
 end
 
@@ -1461,7 +1461,7 @@ function TOOL_PLANE_PANEL:Init()
     create_buttons_standard( self, "plane" )
     
         self.button_view:SetFunction( function()
-            if !PA_funcs.construct_exists( "Plane", PA_selected_plane ) then return false end
+            if not PA_funcs.construct_exists( "Plane", PA_selected_plane ) then return false end
             local plane = PA_funcs.plane_global( PA_selected_plane )
             return PA_funcs.set_playerview( plane.origin )
         end )
@@ -2044,7 +2044,7 @@ hook.Add("HUDPaint", "draw_precision_align", precision_align_draw)
 
 local function precision_align_displayhud_func( ply, cmd, args )
     local enabled = tobool( args[1] )
-    if !enabled then
+    if not enabled then
         hook.Remove( "HUDPaint", "draw_precision_align" )
     else 
         hook.Add("HUDPaint", "draw_precision_align", precision_align_draw)
@@ -2057,7 +2057,7 @@ PA_manipulation_panel = vgui.Create( "PA_Manipulation_Frame" )
 PA_manipulation_panel:SetVisible(false)
 
 local function precision_align_open_panel_func( ply, cmd, args )
-    if !PA_manipulation_panel then
+    if not PA_manipulation_panel then
         local PA_manipulation_panel = vgui.Create( "PA_Manipulation_Frame" )
     else
         if PA_manipulation_panel:IsVisible() then

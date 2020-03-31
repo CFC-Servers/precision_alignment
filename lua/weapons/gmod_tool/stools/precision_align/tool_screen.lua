@@ -44,7 +44,7 @@ local ColourLookup = {
 
 
 local function construct_exists( construct_type, ID )
-    if !construct_type or !ID then return false end
+    if not construct_type or not ID then return false end
 
     if construct_type == "Point" then
         if precision_align_points[ID].origin then
@@ -194,7 +194,7 @@ function PA_DrawToolScreen( w, h )
         
     end )
     
-    if !r then
+    if not r then
         ErrorNoHalt( e, "\n" )
     end
 end
