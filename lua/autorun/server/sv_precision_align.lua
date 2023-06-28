@@ -861,17 +861,16 @@ function precision_align_constraint_func( len, ply )
         local rope
         const, rope = MakeWireHydraulic( ply, Ent1, Ent2, 0, 0, LPos1, LPos2, width, material, 0, nil )
 
-        if const then
-            controller.MyId = controller:EntIndex()
-            const.MyCrtl = controller:EntIndex()
-            controller:SetConstraint( const )
-            controller:DeleteOnRemove( const )
-        end
+		if const then
+			controller.MyId = controller:EntIndex()
+			const.MyCrtl = controller:EntIndex()
+			controller:SetConstraint( const, rope )
+			controller:DeleteOnRemove( const )
+		end
 
-        if rope then
-            controller:SetRope( rope )
-            controller:DeleteOnRemove( rope )
-        end
+		if rope then
+			controller:DeleteOnRemove( rope )
+		end
 
         -- Remove the existing hydraulic constraint
         if oldconstraint then
